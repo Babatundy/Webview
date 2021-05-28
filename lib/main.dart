@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
 void main() {
   runApp(MaterialApp(home: Home(),));
 }
@@ -17,8 +14,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home>  {
   AnimationController animation;
   var number = 0;
-
-
 
   @override
   Widget build(BuildContext context) {
