@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-
+import 'package:webview_flutter/webview_flutter.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
 void main() {
-  runApp(Home());
+  runApp(MaterialApp(home: Home(),));
 }
 
 Widget tag = Icon(Icons.account_circle);
@@ -19,21 +22,10 @@ class _HomeState extends State<Home>  {
 
   @override
   Widget build(BuildContext context) {
-    /*void go_new_route() {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) {
-            return Second_screen();
-          },
-        ),
-      );
-    }*/
-
     return Scaffold(
         backgroundColor: Colors.teal,
         body: WebView(
-          initialUrl: "https://www.google.com/",
+          initialUrl: "https://www.google.com",
           javascriptMode: JavascriptMode.unrestricted,
         )
     );
