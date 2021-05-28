@@ -32,10 +32,7 @@ class _HomeState extends State<Home>  {
 
     return Scaffold(
         backgroundColor: Colors.teal,
-        body: WebView(
-          initialUrl: "https://www.google.com/",
-          javascriptMode: JavascriptMode.unrestricted,
-        )
+        body: Container()
     );
   }
 }
