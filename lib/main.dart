@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:webview_flutter/platform_interface.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 void main() {
@@ -7,60 +10,34 @@ void main() {
   ));
 }
 
-Widget tag = Icon(Icons.account_circle);
-
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-  AnimationController animation;
-  var number = 0;
-  var text_controller = new TextEditingController();
-  String url;
 
+  WebViewController controller;
+  String url = "https://www.google.com";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.teal,
-        appBar: AppBar(
-          backgroundColor: Colors.tealAccent,
-          elevation: 60,
-          flexibleSpace: SafeArea(
-            child: Container(
-              child: TextField(
-                textAlign: TextAlign.center,
-                controller: text_controller,
-                onSubmitted: (text) {
-                  setState(() {
-                    url = text;
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return web(url);
-                        },
-                      ),
-                    );
-                  });
-                },
-              ),
-            ),
-          ),
+      backgroundColor: Color(0xFFF5821F),
+      body: SafeArea(
+        child: WebView(
+          onWebResourceError: (WebResourceError webResourceError) {//this method is called when error accures
+            setState(() {
+              sleep(Duration(milliseconds: 500),);//dertha bah mayhbelch 3liya be boucle infini
+              controller.reload();//we reload the URL when as long as we have the error
+            });
+          },
+          initialUrl: url,
+          javascriptMode: JavascriptMode.unrestricted,//enable JS cause it's disabled by default
+          onWebViewCreated: (WebViewController wc) {
+            controller = wc;//when web view is created we inislize the controller
+          },
         ),
-        body: Container());
+      ),
+    );
   }
-}
-
-Widget web(String url) {
-  return Scaffold(
-    appBar: AppBar(
-      title: Text(url),
-    ),
-    body: WebView(
-      initialUrl: url,
-      javascriptMode: JavascriptMode.unrestricted,
-    ),
-  );
 }
