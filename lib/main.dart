@@ -16,27 +16,88 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   WebViewController controller;
   String url = "https://www.google.com";
+  bool show_error_page = false;
+  String error;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFF5821F),
       body: SafeArea(
-        child: WebView(
-          onWebResourceError: (WebResourceError webResourceError) {//this method is called when error accures
-            setState(() {
-              sleep(Duration(milliseconds: 500),);//dertha bah mayhbelch 3liya be boucle infini
-              controller.reload();//we reload the URL when as long as we have the error
-            });
-          },
-          initialUrl: url,
-          javascriptMode: JavascriptMode.unrestricted,//enable JS cause it's disabled by default
-          onWebViewCreated: (WebViewController wc) {
-            controller = wc;//when web view is created we inislize the controller
-          },
+        child: Stack(
+          children: [
+            WebView(
+              initialUrl: url,
+              javascriptMode: JavascriptMode.unrestricted,
+
+              //enable JS cause it's disabled by default
+
+              onWebViewCreated: (WebViewController wc) {
+                controller =
+                    wc; //when web view is created we inislize the controller
+                //  print(Errorrrr.description);
+              },
+
+              onWebResourceError: (WebResourceError webResourceError) {
+                //this method is called when error accures
+                /*sleep(
+                  //dertha bah mayhbelch 3liya be boucle infini
+                  Duration(milliseconds: 500),
+                );*/
+                //we reload the URL when as long as we have the error
+                controller.reload();
+
+                if (webResourceError.description ==
+                    "net::ERR_INTERNET_DISCONNECTED") {
+                  error = "net::ERR_INTERNET_DISCONNECTED";
+                } else {
+                  error = "bitch ass stupid shit";
+                }
+              },
+              onPageStarted: (String s){
+                setState(() {
+                  error="net::ERR_INTERNET_DISCONNECTED";
+                });
+
+              },
+              onPageFinished:(String s){
+                setState(() {
+                  error="pls work";
+                });
+
+              } ,
+            ),
+            error =="net::ERR_INTERNET_DISCONNECTED"
+                ? Error_page()
+                : Center(child: Text("fuck off"),)
+          ],
         ),
+      ),
+    );
+  }
+
+  void show_error() {
+    setState(() {
+      show_error_page = true;
+    });
+  }
+
+  void hide_error() {
+    setState(() {
+      show_error_page = false;
+    });
+  }
+}
+
+class Error_page extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        color: Colors.blue,
+        child: Text("connect to the internet"),
       ),
     );
   }
