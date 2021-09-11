@@ -17,7 +17,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   WebViewController controller;
-  String url = "https://www.google.com";
+  String url = "http://192.168.43.145:5050/PFE2021_war_exploded/";
   bool show_error_page = false;
   String error;
 
@@ -71,7 +71,7 @@ class _HomeState extends State<Home> {
             ),
             error =="net::ERR_INTERNET_DISCONNECTED"
                 ? Error_page()
-                : Center(child: Text("fuck off"),)
+                : Center(child: Text("Error"),)
           ],
         ),
       ),
@@ -95,9 +95,10 @@ class Error_page extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: Colors.blue,
-        child: Text("connect to the internet"),
+      body: Center(
+        child: Container(
+          child: Text("connect to the internet ya zbi , oula url te3k m9owd",style: TextStyle(fontSize: 40,),textAlign: TextAlign.center,),
+        ),
       ),
     );
   }
